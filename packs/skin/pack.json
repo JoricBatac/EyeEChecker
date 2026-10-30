@@ -1,0 +1,8 @@
+{
+  "id": "skin",
+  "version": "0.0.0",
+  "name": { "en": "Skin", "fil": "Balat" },
+  "placeholder": true,
+  "_note": "Placeholder only (PRD section 5). Cannot be enabled for any organization until built.",
+  "files": {}
+}

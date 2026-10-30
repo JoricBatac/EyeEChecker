@@ -1,0 +1,42 @@
+# Synthetic data for testing the pipeline end to end (no downloads, CPU, ~1 minute).
+# Generate with: python -m src.make_placeholder_data
+pack_id: eye
+pack_dir: ../packs/eye
+manifest: data/placeholder/manifest.csv
+image_root: data/placeholder/images
+frozen_test_manifest: null
+
+split:
+  val_fraction: 0.2
+  test_fraction: 0.2
+  holdout_site: null
+  seed: 13
+
+backbones:
+  tiny:
+    kind: tiny
+    input_size: 64
+    mean: [0.5, 0.5, 0.5]
+    std: [0.5, 0.5, 0.5]
+
+probe:
+  epochs: 200
+  lr: 0.01
+  weight_decay: 0.0001
+  patience: 30
+
+finetune:
+  epochs: 3
+  batch_size: 16
+  lr_head: 0.001
+  lr_backbone: 0.0005
+  weight_decay: 0.01
+
+augment:
+  hflip: true
+  rotate_deg: 10
+  scale: [0.85, 1.0]
+  brightness: 0.1
+  contrast: 0.1
+
+emergency_threshold: 0.3

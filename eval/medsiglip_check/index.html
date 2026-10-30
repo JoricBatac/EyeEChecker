@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedSigLIP Check</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --text:#1c1f24; --muted:#667085; --line:#e3e6ea;
+          --accent:#2f6fde; --ok:#1f8a4c; --bad:#c2410c; --bar:#d6e2f8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#121417; --card:#1b1e23; --text:#e7e9ec; --muted:#9aa3ae; --line:#2b3037;
+            --accent:#6b9cf0; --ok:#4cc386; --bad:#f08a5d; --bar:#26385a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--text); }
+  main { max-width:880px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  p.sub { color:var(--muted); margin:0 0 20px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; align-items:end; }
+  label { display:flex; flex-direction:column; gap:6px; font-weight:600; font-size:13px; flex:1 1 240px; }
+  select, input[type=file] { font:inherit; padding:8px; border:1px solid var(--line); border-radius:8px;
+                             background:var(--bg); color:var(--text); }
+  button { font:inherit; font-weight:600; padding:9px 18px; border:0; border-radius:8px;
+           background:var(--accent); color:#fff; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:default; }
+  #summary { margin:16px 0 0; color:var(--muted); }
+  #results { display:grid; gap:14px; margin-top:16px; }
+  .result { display:grid; grid-template-columns:180px 1fr; gap:16px; }
+  @media (max-width:560px) { .result { grid-template-columns:1fr; } }
+  .result img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:8px; background:var(--bg); }
+  .verdict { font-weight:700; margin:0 0 8px; }
+  .verdict.ok { color:var(--ok); } .verdict.bad { color:var(--bad); }
+  .file { color:var(--muted); font-size:12px; margin:0 0 6px; word-break:break-all; }
+  .bars { display:grid; gap:4px; }
+  .bar { position:relative; padding:3px 8px; border-radius:5px; font-size:13px; display:flex;
+         justify-content:space-between; gap:8px; overflow:hidden; }
+  .bar > i { position:absolute; inset:0 auto 0 0; background:var(--bar); z-index:0; }
+  .bar > span { position:relative; z-index:1; }
+  .bar.expected { outline:2px solid var(--accent); }
+  .note { font-size:12px; color:var(--muted); margin-top:20px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>MedSigLIP diagnosis check</h1>
+  <p class="sub">Upload eye photos, pick the diagnosis you expect, and see whether MedSigLIP ranks it first.</p>
+
+  <form class="panel" id="form">
+    <div class="row">
+      <label>Expected diagnosis
+        <select id="expected"><option value="">(none, just show predictions)</option></select>
+      </label>
+      <label>Photos
+        <input type="file" id="files" accept="image/*" multiple required>
+      </label>
+      <button id="go" type="submit">Check</button>
+    </div>
+    <div id="summary"></div>
+  </form>
+
+  <div id="results"></div>
+  <p class="note">Zero-shot research tool, not a diagnosis. Photos are processed in memory on this computer and are not saved.</p>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const pct = (p) => (p * 100).toFixed(1) + "%";
+let names = {};
+
+fetch("/conditions").then(r => r.json()).then(items => {
+  for (const c of items) {
+    names[c.id] = c.name;
+    $("expected").add(new Option(c.name, c.id));
+  }
+});
+
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const files = [...$("files").files];
+  const expected = $("expected").value;
+  if (!files.length) return;
+  $("go").disabled = true;
+  $("results").innerHTML = "";
+  let done = 0, correct = 0;
+
+  for (const file of files) {
+    $("summary").textContent = `Checking ${done + 1} of ${files.length}...`;
+    const card = document.createElement("div");
+    card.className = "panel result";
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    const body = document.createElement("div");
+    card.append(img, body);
+    $("results").append(card);
+
+    try {
+      const res = await fetch("/check?expected=" + encodeURIComponent(expected), { method: "POST", body: file });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || res.statusText);
+      if (data.correct) correct++;
+      body.innerHTML = render(file.name, data);
+    } catch (err) {
+      body.innerHTML = `<p class="file"></p><p class="verdict bad"></p>`;
+      body.querySelector(".file").textContent = file.name;
+      body.querySelector(".verdict").textContent = "Error: " + err.message;
+    }
+    done++;
+  }
+
+  $("summary").textContent = expected
+    ? `${correct} of ${files.length} photo(s) ranked "${names[expected]}" first.`
+    : `Checked ${files.length} photo(s).`;
+  $("go").disabled = false;
+});
+
+function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+function render(fileName, data) {
+  const top = data.ranked[0];
+  let verdict = `<p class="verdict">Top prediction: ${esc(top.name)} (${pct(top.prob)})</p>`;
+  if (data.expected) {
+    verdict = data.correct
+      ? `<p class="verdict ok">Match: ${esc(top.name)} (${pct(top.prob)})</p>`
+      : `<p class="verdict bad">No match: predicted ${esc(top.name)} (${pct(top.prob)}); expected diagnosis ranked #${data.expected_rank}</p>`;
+  }
+  const bars = data.ranked.map(r => `
+    <div class="bar${r.id === data.expected ? " expected" : ""}">
+      <i style="width:${(r.prob * 100).toFixed(1)}%"></i>
+      <span>${esc(r.name)}</span><span>${pct(r.prob)}</span>
+    </div>`).join("");
+  return `<p class="file">${esc(fileName)}</p>${verdict}<div class="bars">${bars}</div>`;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+{
+  "views": [
+    {
+      "id": "right_eye",
+      "label": {
+        "en": "Right eye",
+        "fil": "Kanang mata"
+      },
+      "required": false,
+      "overlay": "eye_oval",
+      "instructions": {
+        "en": "Patient looks straight ahead. Fill the oval with the right eye, eyelids open.",
+        "fil": "Tumingin nang diretso ang pasyente. Punuin ang oval ng kanang mata, nakadilat."
+      }
+    },
+    {
+      "id": "left_eye",
+      "label": {
+        "en": "Left eye",
+        "fil": "Kaliwang mata"
+      },
+      "required": false,
+      "overlay": "eye_oval",
+      "instructions": {
+        "en": "Patient looks straight ahead. Fill the oval with the left eye, eyelids open.",
+        "fil": "Tumingin nang diretso ang pasyente. Punuin ang oval ng kaliwang mata, nakadilat."
+      }
+    },
+    {
+      "id": "closeup",
+      "label": {
+        "en": "Close-up of affected eye",
+        "fil": "Malapitang kuha ng apektadong mata"
+      },
+      "required": false,
+      "overlay": "eye_circle",
+      "instructions": {
+        "en": "Close-up of the affected area. Avoid flash reflection on the cornea.",
+        "fil": "Malapitang kuha ng apektadong bahagi. Iwasan ang repleksyon ng flash sa cornea."
+      }
+    },
+    {
+      "id": "dim_light",
+      "label": {
+        "en": "Dim light (larger pupil)",
+        "fil": "Madilim na ilaw (malaking balintataw)"
+      },
+      "required": false,
+      "overlay": "eye_circle",
+      "instructions": {
+        "en": "Dim the room lights for 30 seconds so the pupil enlarges, then photograph without flash.",
+        "fil": "Padilimin ang kwarto nang 30 segundo para lumaki ang balintataw, saka kunan nang walang flash."
+      },
+      "quality_overrides": {
+        "min_brightness": 25
+      }
+    },
+    {
+      "id": "red_reflex_flash",
+      "label": {
+        "en": "Flash photo (red reflex)",
+        "fil": "Kuha na may flash (red reflex)"
+      },
+      "required": false,
+      "overlay": "eye_circle",
+      "flash": true,
+      "instructions": {
+        "en": "Use flash, about 1 metre away, patient looking at the camera.",
+        "fil": "Gamitin ang flash, mga 1 metro ang layo, nakatingin ang pasyente sa camera."
+      },
+      "quality_overrides": {
+        "max_glare_fraction": 0.08
+      }
+    }
+  ],
+  "conditional_views": [
+    {
+      "_note": "Suspected cataract (PRD 6.1): dim-light and flash red reflex photos are recommended (shown as suggestions, never blocking).",
+      "when": {
+        "any": [
+          {
+            "fact": "suspected",
+            "op": "contains",
+            "value": "lens_opacity_cataract"
+          },
+          {
+            "fact": "model.lens_opacity_cataract",
+            "op": "gte",
+            "value": 0.3
+          }
+        ]
+      },
+      "require": [
+        "dim_light",
+        "red_reflex_flash"
+      ]
+    }
+  ],
+  "quality": {
+    "max_long_edge": 1600,
+    "min_sharpness": 60.0,
+    "min_brightness": 45,
+    "max_brightness": 215,
+    "max_glare_fraction": 0.03
+  },
+  "retake_tips": {
+    "blurry": {
+      "en": "Photo is blurry. Hold the phone steady and tap the eye to focus.",
+      "fil": "Malabo ang larawan. Hawakan nang matatag ang telepono at i-tap ang mata para mag-focus."
+    },
+    "too_dark": {
+      "en": "Too dark. Move to better light or face a window.",
+      "fil": "Masyadong madilim. Lumipat sa mas maliwanag na lugar o humarap sa bintana."
+    },
+    "too_bright": {
+      "en": "Overexposed. Move away from direct light.",
+      "fil": "Masyadong maliwanag. Lumayo sa direktang liwanag."
+    },
+    "glare": {
+      "en": "Strong glare on the eye. Tilt the phone slightly or turn off the flash.",
+      "fil": "May matinding silaw sa mata. Bahagyang ikiling ang telepono o patayin ang flash."
+    },
+    "too_small": {
+      "en": "Image resolution too low. Move closer or use the rear camera.",
+      "fil": "Masyadong mababa ang resolusyon. Lumapit o gamitin ang likod na camera."
+    }
+  },
+  "lighting_views": {
+    "normal": "closeup",
+    "dim": "dim_light",
+    "flash": "red_reflex_flash"
+  },
+  "lighting_labels": {
+    "normal": {
+      "en": "Normal light",
+      "fil": "Karaniwang liwanag"
+    },
+    "dim": {
+      "en": "Dim light",
+      "fil": "Madilim na ilaw"
+    },
+    "flash": {
+      "en": "Flash",
+      "fil": "May flash"
+    }
+  }
+}

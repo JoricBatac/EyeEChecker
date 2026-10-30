@@ -1,0 +1,58 @@
+# Eye pack training config. Paths are relative to ml/.
+pack_id: eye
+pack_dir: ../packs/eye
+
+# Datasets come ONLY from the separate training data workstream (PRD 10.6), never from the app.
+manifest: data/eye/manifest.csv
+image_root: data/eye/images
+# Test 2 benchmark: frozen, test-only, excluded from every training run.
+frozen_test_manifest: data/eye/frozen_test.csv
+
+split:
+  val_fraction: 0.15
+  test_fraction: 0.15
+  holdout_site: null        # set to a site name to use one organization as the external test set
+  seed: 13
+
+backbones:
+  medsiglip:
+    kind: medsiglip
+    model_id: google/medsiglip-448
+    input_size: 448
+    mean: [0.5, 0.5, 0.5]
+    std: [0.5, 0.5, 0.5]
+  efficientnet:
+    kind: timm
+    name: efficientnet_b3
+    input_size: 320
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+  convnext:
+    kind: timm
+    name: convnext_tiny
+    input_size: 288
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+
+probe:
+  epochs: 300
+  lr: 0.003
+  weight_decay: 0.0001
+  patience: 30
+
+finetune:
+  epochs: 30
+  batch_size: 16
+  lr_head: 0.001
+  lr_backbone: 0.00002
+  weight_decay: 0.01
+
+# Geometric and brightness/contrast only. No hue or saturation shifts: color is diagnostic.
+augment:
+  hflip: true
+  rotate_deg: 10
+  scale: [0.85, 1.0]
+  brightness: 0.1
+  contrast: 0.1
+
+emergency_threshold: 0.3

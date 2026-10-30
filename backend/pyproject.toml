@@ -1,0 +1,57 @@
+[project]
+name = "scanassist-backend"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "sqlalchemy>=2.0",
+  "psycopg[binary]>=3.2",
+  "pydantic>=2.7",
+  "pydantic-settings>=2.3",
+  "email-validator>=2.1",
+  "pyjwt>=2.8",
+  "bcrypt>=4.1",
+  "pyotp>=2.9",
+  "python-multipart>=0.0.9",
+  "pillow>=10.3",
+  "numpy>=1.26",
+  "jinja2>=3.1",
+  "fpdf2>=2.7",
+  "httpx>=0.27",
+  "boto3>=1.34",
+  "pyyaml>=6.0",
+  "cryptography>=42",
+]
+
+[project.optional-dependencies]
+# Zero-shot MedSigLIP and ONNX inference. Heavy; install only where the classifier runs.
+ml = ["torch>=2.3", "transformers>=4.50", "onnxruntime>=1.18", "sentencepiece>=0.2", "protobuf>=4.25"]
+dev = ["pytest>=8", "ruff>=0.5", "mypy>=1.10", "types-PyYAML"]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.setuptools.package-data]
+"app.modules.llm" = ["*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008", "E501"]  # line length is handled by ruff format
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+check_untyped_defs = true

@@ -1,0 +1,23 @@
+{
+  "id": "eye",
+  "version": "1.0.0",
+  "name": { "en": "Eye", "fil": "Mata" },
+  "placeholder": false,
+  "pediatric_age_threshold": 18,
+  "default_condition_state": "reveal_after",
+  "likelihood_bands": { "high": 0.6, "moderate": 0.3 },
+  "files": {
+    "conditions": "conditions.json",
+    "capture_protocol": "capture_protocol.json",
+    "exam_form": "exam_form.schema.json",
+    "ruleset": "ruleset.v1.json",
+    "management_library": "management_library.yaml",
+    "report_templates": "report_templates",
+    "content": "content"
+  },
+  "model": {
+    "kind": "zero_shot",
+    "version": "medsiglip-448-zs-v1",
+    "onnx_dir": null
+  }
+}

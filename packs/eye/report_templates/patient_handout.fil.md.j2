@@ -1,0 +1,28 @@
+# Resulta ng Iyong Pagsusuri sa Mata
+
+**Pangalan:** {{ patient.name }} | **Petsa:** {{ date }}
+
+## Ang aming nakita
+{% for d in diagnoses %}
+- **{{ d.name }}**{% if d.explainer %}: {{ d.explainer }}{% endif %}
+{% endfor %}
+
+## Ano ang gagawin
+{% for p in plan %}
+- {{ p }}
+{% endfor %}
+{% if referral_reasons %}
+
+## Referral
+Magpatingin sa espesyalista sa mata (ophthalmologist){% if urgency == "urgent" %} **sa lalong madaling panahon, ngayong araw kung kaya**{% endif %}.
+{% for r in referral_reasons %}
+- {{ r }}
+{% endfor %}
+{% endif %}
+
+## Bumalik agad kung
+- Lumala ang sakit ng mata
+- Lumabo pa ang paningin
+- Naging napakasakit tumingin sa liwanag
+
+{{ clinician.name }}, {{ clinic.name }}

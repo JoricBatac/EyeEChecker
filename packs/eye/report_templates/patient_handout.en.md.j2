@@ -1,0 +1,28 @@
+# Your Eye Check Results
+
+**Name:** {{ patient.name }} | **Date:** {{ date }}
+
+## What we found
+{% for d in diagnoses %}
+- **{{ d.name }}**{% if d.explainer %}: {{ d.explainer }}{% endif %}
+{% endfor %}
+
+## What to do
+{% for p in plan %}
+- {{ p }}
+{% endfor %}
+{% if referral_reasons %}
+
+## Referral
+Please see an eye specialist (ophthalmologist){% if urgency == "urgent" %} **as soon as possible, today if you can**{% endif %}.
+{% for r in referral_reasons %}
+- {{ r }}
+{% endfor %}
+{% endif %}
+
+## Come back right away if
+- Your eye pain gets worse
+- Your vision gets worse
+- Light becomes very painful to look at
+
+{{ clinician.name }}, {{ clinic.name }}

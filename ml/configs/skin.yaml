@@ -1,0 +1,6 @@
+# Placeholder: the Skin pack is designed for, not built (PRD 5). Fill in once packs/skin exists.
+pack_id: skin
+pack_dir: ../packs/skin
+manifest: data/skin/manifest.csv
+image_root: data/skin/images
+frozen_test_manifest: data/skin/frozen_test.csv

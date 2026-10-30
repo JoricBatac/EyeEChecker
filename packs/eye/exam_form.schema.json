@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "fields": [
+    {
+      "id": "affected_side",
+      "type": "single",
+      "label": { "en": "Affected eye", "fil": "Apektadong mata" },
+      "required": true,
+      "options": [
+        { "value": "right", "label": { "en": "Right", "fil": "Kanan" } },
+        { "value": "left", "label": { "en": "Left", "fil": "Kaliwa" } },
+        { "value": "both", "label": { "en": "Both", "fil": "Pareho" } }
+      ]
+    },
+    {
+      "id": "symptoms",
+      "type": "multi",
+      "label": { "en": "Symptoms", "fil": "Mga sintomas" },
+      "required": true,
+      "options": [
+        { "value": "redness", "label": { "en": "Redness", "fil": "Pamumula" } },
+        { "value": "itching", "label": { "en": "Itching", "fil": "Pangangati" } },
+        { "value": "tearing", "label": { "en": "Tearing", "fil": "Pagluluha" } },
+        { "value": "discharge", "label": { "en": "Discharge", "fil": "May muta" } },
+        { "value": "pain", "label": { "en": "Pain", "fil": "Pananakit" } },
+        { "value": "photophobia", "label": { "en": "Light sensitivity", "fil": "Masakit sa liwanag" } },
+        { "value": "blurred_vision", "label": { "en": "Blurred vision", "fil": "Malabong paningin" } },
+        { "value": "foreign_body_sensation", "label": { "en": "Foreign body sensation", "fil": "Parang may puwing" } },
+        { "value": "lid_swelling", "label": { "en": "Eyelid swelling", "fil": "Pamamaga ng talukap" } },
+        { "value": "halos", "label": { "en": "Halos around lights", "fil": "May bilog sa paligid ng ilaw" } },
+        { "value": "headache", "label": { "en": "Headache", "fil": "Sakit ng ulo" } },
+        { "value": "nausea", "label": { "en": "Nausea or vomiting", "fil": "Pagduduwal o pagsusuka" } }
+      ]
+    },
+    {
+      "id": "duration",
+      "type": "single",
+      "label": { "en": "Duration", "fil": "Gaano katagal" },
+      "required": true,
+      "options": [
+        { "value": "lt_1d", "label": { "en": "Less than 1 day", "fil": "Wala pang 1 araw" } },
+        { "value": "1_3d", "label": { "en": "1 to 3 days", "fil": "1 hanggang 3 araw" } },
+        { "value": "4_7d", "label": { "en": "4 to 7 days", "fil": "4 hanggang 7 araw" } },
+        { "value": "1_4w", "label": { "en": "1 to 4 weeks", "fil": "1 hanggang 4 na linggo" } },
+        { "value": "gt_1m", "label": { "en": "More than 1 month", "fil": "Higit 1 buwan" } }
+      ]
+    },
+    {
+      "id": "pain_severity",
+      "type": "single",
+      "label": { "en": "Pain", "fil": "Tindi ng sakit" },
+      "required": true,
+      "options": [
+        { "value": "none", "label": { "en": "None", "fil": "Wala" } },
+        { "value": "mild", "label": { "en": "Mild", "fil": "Bahagya" } },
+        { "value": "moderate", "label": { "en": "Moderate", "fil": "Katamtaman" } },
+        { "value": "severe", "label": { "en": "Severe", "fil": "Matindi" } }
+      ]
+    },
+    {
+      "id": "discharge_type",
+      "type": "single",
+      "label": { "en": "Discharge", "fil": "Uri ng muta" },
+      "required": false,
+      "show_if": { "fact": "exam.symptoms", "op": "contains", "value": "discharge" },
+      "options": [
+        { "value": "watery", "label": { "en": "Watery", "fil": "Matubig" } },
+        { "value": "mucoid", "label": { "en": "Mucoid", "fil": "Malapot" } },
+        { "value": "purulent", "label": { "en": "Purulent (yellow/green)", "fil": "Nana (dilaw/berde)" } }
+      ]
+    },
+    {
+      "id": "vision_change",
+      "type": "single",
+      "label": { "en": "Change in vision", "fil": "Pagbabago sa paningin" },
+      "required": true,
+      "options": [
+        { "value": "none", "label": { "en": "None", "fil": "Wala" } },
+        { "value": "mild_blur", "label": { "en": "Mild blur", "fil": "Bahagyang malabo" } },
+        { "value": "gradual_reduction", "label": { "en": "Gradual reduction over months", "fil": "Unti-unting paglabo sa loob ng mga buwan" } },
+        { "value": "marked_reduction", "label": { "en": "Marked reduction", "fil": "Malaking pagbaba" } },
+        { "value": "sudden_loss", "label": { "en": "Sudden loss", "fil": "Biglang pagkawala" } }
+      ]
+    },
+    {
+      "id": "va_right",
+      "type": "visual_acuity",
+      "label": { "en": "Visual acuity, right eye", "fil": "Visual acuity, kanang mata" },
+      "required": false,
+      "required_if": { "fact": "exam.vision_change", "op": "in", "value": ["mild_blur", "gradual_reduction", "marked_reduction", "sudden_loss"] }
+    },
+    {
+      "id": "va_left",
+      "type": "visual_acuity",
+      "label": { "en": "Visual acuity, left eye", "fil": "Visual acuity, kaliwang mata" },
+      "required": false,
+      "required_if": { "fact": "exam.vision_change", "op": "in", "value": ["mild_blur", "gradual_reduction", "marked_reduction", "sudden_loss"] }
+    },
+    {
+      "id": "contact_lens",
+      "type": "boolean",
+      "label": { "en": "Contact lens wearer", "fil": "Gumagamit ng contact lens" },
+      "required": true
+    },
+    {
+      "id": "prior_eye_surgery",
+      "type": "multi",
+      "label": { "en": "Prior eye surgery", "fil": "Naunang operasyon sa mata" },
+      "required": true,
+      "options": [
+        { "value": "none", "label": { "en": "None", "fil": "Wala" } },
+        { "value": "cataract_surgery_right", "label": { "en": "Cataract surgery, right", "fil": "Operasyon sa katarata, kanan" } },
+        { "value": "cataract_surgery_left", "label": { "en": "Cataract surgery, left", "fil": "Operasyon sa katarata, kaliwa" } },
+        { "value": "refractive", "label": { "en": "Refractive surgery", "fil": "Refractive surgery" } },
+        { "value": "other", "label": { "en": "Other", "fil": "Iba pa" } }
+      ]
+    },
+    {
+      "id": "trauma_or_chemical",
+      "type": "single",
+      "label": { "en": "Injury or chemical exposure", "fil": "Pinsala o pagkalantad sa kemikal" },
+      "required": true,
+      "options": [
+        { "value": "none", "label": { "en": "None", "fil": "Wala" } },
+        { "value": "chemical", "label": { "en": "Chemical splash", "fil": "Natalsikan ng kemikal" } },
+        { "value": "blunt", "label": { "en": "Blunt injury", "fil": "Natamaan / nabunggo" } },
+        { "value": "penetrating", "label": { "en": "Penetrating injury", "fil": "Natusok / tumagos" } },
+        { "value": "foreign_body", "label": { "en": "Foreign body", "fil": "May pumasok na bagay" } }
+      ]
+    },
+    {
+      "id": "red_reflex",
+      "type": "single",
+      "label": { "en": "Red reflex (pupil glow)", "fil": "Red reflex" },
+      "required": false,
+      "options": [
+        { "value": "not_checked", "label": { "en": "Not checked", "fil": "Hindi nasuri" } },
+        { "value": "normal", "label": { "en": "Normal, symmetric", "fil": "Normal, pantay" } },
+        { "value": "dull", "label": { "en": "Dull", "fil": "Mapurol" } },
+        { "value": "white", "label": { "en": "White (leukocoria)", "fil": "Puti (leukocoria)" } },
+        { "value": "asymmetric", "label": { "en": "Asymmetric", "fil": "Hindi pantay" } }
+      ]
+    },
+    {
+      "id": "corneal_opacity",
+      "type": "boolean",
+      "label": { "en": "Visible corneal opacity or white spot", "fil": "May puting batik sa cornea" },
+      "required": false
+    },
+    {
+      "id": "notes",
+      "type": "text",
+      "label": { "en": "Notes", "fil": "Mga tala" },
+      "required": false,
+      "free_text": true
+    }
+  ]
+}

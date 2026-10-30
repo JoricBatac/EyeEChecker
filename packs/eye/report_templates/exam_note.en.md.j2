@@ -1,0 +1,35 @@
+# Eye Examination Note
+
+**Patient:** {{ patient.name }} | **Age:** {{ patient.age if patient.age is not none else "n/a" }} | **Sex:** {{ patient.sex or "n/a" }}
+**Date:** {{ date }} | **Clinician:** {{ clinician.name }}{% if clinician.license_no %} (Lic. {{ clinician.license_no }}){% endif %}
+
+## Findings
+{% for f in findings %}
+- {{ f.label }}: {{ f.value }}
+{% endfor %}
+
+## Assessment
+{% for d in diagnoses %}
+- {{ d.name }}{% if d.side %} ({{ d.side }}){% endif %}{% if d.note %}: {{ d.note }}{% endif %}
+{% endfor %}
+
+**Urgency:** {{ urgency }}
+{% if red_flags %}
+
+## Red flags acknowledged
+{% for r in red_flags %}
+- {{ r }}
+{% endfor %}
+{% endif %}
+
+## Plan
+{% for p in plan %}
+- {{ p }}
+{% endfor %}
+{% if referral_reasons %}
+
+## Referral
+{% for r in referral_reasons %}
+- {{ r }}
+{% endfor %}
+{% endif %}

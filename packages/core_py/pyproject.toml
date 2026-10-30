@@ -1,0 +1,13 @@
+[project]
+name = "scanassist-core"
+version = "0.1.0"
+description = "Shared image preprocessing for the backend and the ml pipeline"
+requires-python = ">=3.11"
+dependencies = ["pillow>=10.3", "numpy>=1.26"]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["scanassist_core*"]

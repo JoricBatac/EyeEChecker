@@ -1,0 +1,23 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:v0.10.1.1
+    restart: "no"   # started and stopped by the clinic-hours timers
+    command:
+      - --model=/models/medgemma-4b-it
+      - --served-model-name=google/medgemma-4b-it
+      - --max-model-len=8192
+      - --gpu-memory-utilization=0.90
+      - --disable-log-requests
+    ports:
+      - "${PRIVATE_IP:-127.0.0.1}:8000:8000"   # bind to the private/WireGuard interface only
+    volumes:
+      - /opt/models:/models:ro
+    environment:
+      HF_HUB_OFFLINE: "1"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

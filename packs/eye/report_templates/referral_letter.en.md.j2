@@ -1,0 +1,42 @@
+# Referral Letter
+
+**Date:** {{ date }}
+**To:** Ophthalmology
+
+Dear Colleague,
+
+I am referring **{{ patient.name }}**, {{ patient.age if patient.age is not none else "age not recorded" }}{% if patient.sex %}, {{ patient.sex }}{% endif %}, for further evaluation.
+
+**Urgency:** {{ urgency }}
+
+## Reason for referral
+{% for r in referral_reasons %}
+- {{ r }}
+{% endfor %}
+
+## Working diagnosis
+{% for d in diagnoses %}
+- {{ d.name }}{% if d.side %} ({{ d.side }}){% endif %}
+{% endfor %}
+
+## Relevant findings
+{% for f in findings %}
+- {{ f.label }}: {{ f.value }}
+{% endfor %}
+{% if red_flags %}
+
+## Red flags
+{% for r in red_flags %}
+- {{ r }}
+{% endfor %}
+{% endif %}
+
+## Management so far
+{% for p in plan %}
+- {{ p }}
+{% endfor %}
+
+Thank you for seeing this patient.
+
+{{ clinician.name }}{% if clinician.license_no %}, Lic. {{ clinician.license_no }}{% endif %}
+{{ clinic.name }}{% if clinic.address %}, {{ clinic.address }}{% endif %}

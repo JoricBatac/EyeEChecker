@@ -1,0 +1,93 @@
+# Approved management options per condition (PRD 5, FR-25).
+# DRAFT: every entry must be reviewed and approved by the clinical advisor before use with patients.
+# `professions` limits who sees the option (scope of practice). Professions: optometrist, physician, ophthalmologist.
+# No drug doses here on purpose; dosing follows local guidelines and is written by the clinician.
+
+common:
+  - id: return_if_worse
+    text: { en: "Return immediately if pain, light sensitivity or vision worsens.", fil: "Bumalik agad kung lumala ang sakit, pagkasilaw o paningin." }
+    professions: [optometrist, physician, ophthalmologist]
+  - id: follow_up_1w
+    text: { en: "Follow-up in 1 week.", fil: "Bumalik pagkalipas ng 1 linggo." }
+    professions: [optometrist, physician, ophthalmologist]
+  - id: refer_ophthalmologist
+    text: { en: "Refer to ophthalmologist.", fil: "I-refer sa ophthalmologist." }
+    professions: [optometrist, physician]
+    referral: true
+
+conditions:
+  normal:
+    - id: reassure
+      text: { en: "Reassurance; no treatment needed.", fil: "Walang dapat ikabahala; walang kailangang gamutan." }
+      professions: [optometrist, physician, ophthalmologist]
+  conj_viral:
+    - id: hygiene
+      text: { en: "Hand hygiene, do not share towels; avoid touching the eyes.", fil: "Laging maghugas ng kamay, huwag makigamit ng tuwalya; iwasang hawakan ang mata." }
+      professions: [optometrist, physician, ophthalmologist]
+    - id: cold_compress_lubricants
+      text: { en: "Cold compress and preservative-free lubricant drops for comfort.", fil: "Malamig na kompres at lubricant eye drops para gumaan ang pakiramdam." }
+      professions: [optometrist, physician, ophthalmologist]
+    - id: school_work_exclusion
+      text: { en: "Stay home from school or work while eyes are red and tearing.", fil: "Manatili sa bahay habang mapula at nagluluha ang mata." }
+      professions: [optometrist, physician, ophthalmologist]
+  conj_bacterial:
+    - id: hygiene
+      text: { en: "Hand hygiene, do not share towels.", fil: "Laging maghugas ng kamay, huwag makigamit ng tuwalya." }
+      professions: [optometrist, physician, ophthalmologist]
+    - id: topical_antibiotic
+      text: { en: "Topical antibiotic eye drops per local guidelines.", fil: "Antibiotic na eye drops ayon sa reseta." }
+      professions: [physician, ophthalmologist]
+  conj_allergic:
+    - id: avoid_allergen
+      text: { en: "Avoid known triggers; cold compress.", fil: "Iwasan ang mga nagdudulot ng allergy; malamig na kompres." }
+      professions: [optometrist, physician, ophthalmologist]
+    - id: antihistamine_drops
+      text: { en: "Topical antihistamine / mast cell stabilizer drops.", fil: "Antihistamine na eye drops." }
+      professions: [optometrist, physician, ophthalmologist]
+  subconj_hemorrhage:
+    - id: reassure_resolves
+      text: { en: "Reassurance; usually clears in 1 to 3 weeks.", fil: "Kusang nawawala sa loob ng 1 hanggang 3 linggo." }
+      professions: [optometrist, physician, ophthalmologist]
+    - id: check_bp
+      text: { en: "Check blood pressure; review anticoagulant use if recurrent.", fil: "Suriin ang presyon ng dugo." }
+      professions: [physician, ophthalmologist]
+  dry_eye:
+    - id: lubricants
+      text: { en: "Preservative-free lubricant drops; screen-time breaks.", fil: "Lubricant eye drops; magpahinga mula sa screen." }
+      professions: [optometrist, physician, ophthalmologist]
+  hordeolum_chalazion:
+    - id: warm_compress
+      text: { en: "Warm compress and lid massage several times a day.", fil: "Mainit na kompres at masahe sa talukap ilang beses sa isang araw." }
+      professions: [optometrist, physician, ophthalmologist]
+    - id: refer_if_persistent
+      text: { en: "Refer for incision and curettage if persistent beyond 4 weeks.", fil: "I-refer kung hindi nawala pagkalipas ng 4 na linggo." }
+      professions: [optometrist, physician]
+      referral: true
+  pterygium_pinguecula:
+    - id: uv_protection
+      text: { en: "UV-protective sunglasses, lubricants.", fil: "Salaming may UV protection, lubricant eye drops." }
+      professions: [optometrist, physician, ophthalmologist]
+    - id: refer_visual_axis
+      text: { en: "Refer if encroaching on the visual axis.", fil: "I-refer kung umaabot na sa gitna ng mata." }
+      professions: [optometrist, physician]
+      referral: true
+  lens_opacity_cataract:
+    - id: refer_cataract_eval
+      text: { en: "Refer for evaluation for cataract surgery.", fil: "I-refer para suriin para sa operasyon sa katarata." }
+      professions: [optometrist, physician, ophthalmologist]
+      referral: true
+  keratitis_ulcer:
+    - id: urgent_referral
+      text: { en: "Same-day referral to ophthalmologist. Stop contact lens use.", fil: "I-refer sa ophthalmologist sa parehong araw. Itigil ang paggamit ng contact lens." }
+      professions: [optometrist, physician]
+      referral: true
+  uveitis:
+    - id: urgent_referral
+      text: { en: "Urgent referral to ophthalmologist.", fil: "Apurahang i-refer sa ophthalmologist." }
+      professions: [optometrist, physician]
+      referral: true
+  angle_closure:
+    - id: emergency_referral
+      text: { en: "Emergency referral to ophthalmologist now.", fil: "I-refer agad sa ophthalmologist ngayon din." }
+      professions: [optometrist, physician]
+      referral: true

@@ -1,0 +1,99 @@
+{
+  "version": "1.0.0",
+  "_note": "Draft red-flag rules (PRD section 9). Owned and signed off by the clinical advisor.",
+  "emergency_model_threshold": 0.3,
+  "red_flags": [
+    {
+      "id": "chemical_or_trauma",
+      "severity": "urgent",
+      "show_policy": "always",
+      "message": { "en": "Chemical exposure or eye injury reported. Treat as urgent.", "fil": "May pagkalantad sa kemikal o pinsala sa mata. Ituring na apurahan." },
+      "when": { "fact": "exam.trauma_or_chemical", "op": "in", "value": ["chemical", "blunt", "penetrating"] }
+    },
+    {
+      "id": "vision_loss",
+      "severity": "urgent",
+      "show_policy": "always",
+      "message": { "en": "Sudden or marked reduction in vision.", "fil": "Biglaan o malaking pagbaba ng paningin." },
+      "when": { "fact": "exam.vision_change", "op": "in", "value": ["marked_reduction", "sudden_loss"] }
+    },
+    {
+      "id": "moderate_severe_pain",
+      "severity": "urgent",
+      "show_policy": "always",
+      "message": { "en": "Moderate to severe eye pain.", "fil": "Katamtaman hanggang matinding sakit ng mata." },
+      "when": { "fact": "exam.pain_severity", "op": "in", "value": ["moderate", "severe"] }
+    },
+    {
+      "id": "photophobia_with_pain",
+      "severity": "urgent",
+      "show_policy": "always",
+      "message": { "en": "Light sensitivity with pain: consider keratitis or uveitis.", "fil": "Masakit sa liwanag at may pananakit: isaalang-alang ang keratitis o uveitis." },
+      "when": {
+        "all": [
+          { "fact": "exam.symptoms", "op": "contains", "value": "photophobia" },
+          { "fact": "exam.pain_severity", "op": "in", "value": ["mild", "moderate", "severe"] }
+        ]
+      }
+    },
+    {
+      "id": "contact_lens_pain_or_opacity",
+      "severity": "urgent",
+      "show_policy": "always",
+      "message": { "en": "Contact lens wearer with pain or corneal opacity: rule out microbial keratitis.", "fil": "Gumagamit ng contact lens na may sakit o puting batik sa cornea: alamin kung may impeksyon sa cornea." },
+      "when": {
+        "all": [
+          { "fact": "exam.contact_lens", "op": "eq", "value": true },
+          {
+            "any": [
+              { "fact": "exam.pain_severity", "op": "in", "value": ["mild", "moderate", "severe"] },
+              { "fact": "exam.corneal_opacity", "op": "eq", "value": true }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "angle_closure_symptoms",
+      "severity": "urgent",
+      "show_policy": "always",
+      "message": { "en": "Painful red eye with headache, nausea or halos: consider acute angle closure.", "fil": "Masakit at mapulang mata na may sakit ng ulo, pagduduwal o halos: isaalang-alang ang acute angle closure." },
+      "when": {
+        "all": [
+          { "fact": "exam.symptoms", "op": "contains", "value": "redness" },
+          { "fact": "exam.pain_severity", "op": "in", "value": ["mild", "moderate", "severe"] },
+          { "fact": "exam.symptoms", "op": "contains_any", "value": ["headache", "nausea", "halos"] }
+        ]
+      }
+    },
+    {
+      "id": "pediatric_abnormal_reflex",
+      "severity": "urgent",
+      "show_policy": "always",
+      "referral": true,
+      "message": {
+        "en": "Abnormal pupil reflex in a child: urgent referral to rule out congenital cataract or retinoblastoma.",
+        "fil": "Abnormal na pupil reflex sa bata: apurahang i-refer para malaman kung may congenital cataract o retinoblastoma."
+      },
+      "when": {
+        "all": [
+          { "fact": "patient.is_pediatric", "op": "eq", "value": true },
+          {
+            "any": [
+              { "fact": "exam.red_reflex", "op": "in", "value": ["dull", "white", "asymmetric"] },
+              { "fact": "model.lens_opacity_cataract", "op": "gte", "value": 0.05 },
+              { "fact": "suspected", "op": "contains", "value": "lens_opacity_cataract" }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "urgency_rules": [
+    {
+      "id": "purulent_discharge",
+      "urgency": "soon",
+      "when": { "fact": "exam.discharge_type", "op": "eq", "value": "purulent" }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "_note": "Draft Filipino translations; review by the clinical advisor and a native speaker before use.",
+  "normal": "Mukhang malusog ang iyong mata ngayon.",
+  "conj_viral": "Impeksyon sa manipis na balat sa ibabaw ng puti ng mata na dulot ng virus. Madali itong makahawa at kadalasang gumagaling nang kusa sa loob ng 1 hanggang 2 linggo.",
+  "conj_bacterial": "Impeksyon sa manipis na balat sa ibabaw ng puti ng mata na dulot ng bacteria. Madali itong makahawa.",
+  "conj_allergic": "Pamumula at pangangati dahil sa allergy. Hindi ito nakakahawa.",
+  "subconj_hemorrhage": "Isang maliit na ugat na pumutok sa puti ng mata. Nakakabahala tingnan pero kadalasang hindi delikado at kusang nawawala.",
+  "dry_eye": "Hindi sapat ang basa sa ibabaw ng mata kaya ito nangangati o naiirita.",
+  "hordeolum_chalazion": "Baradong glandula ng langis sa talukap na nagdudulot ng bukol.",
+  "pterygium_pinguecula": "Isang tubo sa puti ng mata, kadalasang dahil sa araw at hangin.",
+  "lens_opacity_cataract": "Maaaring lumalabo ang lente sa loob ng iyong mata (katarata). Karaniwan ito at nagagamot sa operasyon. Kailangan itong suriin ng espesyalista sa mata.",
+  "keratitis_ulcer": "Impeksyon o sugat sa malinaw na harapan ng mata. Kailangan ng agarang gamutan mula sa espesyalista sa mata.",
+  "uveitis": "Pamamaga sa loob ng mata. Kailangan ng agarang gamutan mula sa espesyalista sa mata.",
+  "angle_closure": "Biglang tumaas ang presyon sa loob ng mata. Emergency ito at kailangang magpatingin agad sa espesyalista sa mata.",
+  "other_unclear": "Ipapaliwanag ng iyong doktor ang nakita."
+}

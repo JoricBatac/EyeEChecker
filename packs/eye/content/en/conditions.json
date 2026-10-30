@@ -1,0 +1,16 @@
+{
+  "_note": "Patient-friendly explainers used in handouts. Clinical advisor reviews before use.",
+  "normal": "Your eye looks healthy today.",
+  "conj_viral": "An infection of the clear layer over the white of the eye, caused by a virus. It spreads easily and usually gets better on its own in 1 to 2 weeks.",
+  "conj_bacterial": "An infection of the clear layer over the white of the eye, caused by bacteria. It spreads easily.",
+  "conj_allergic": "Redness and itching caused by an allergy. It is not contagious.",
+  "subconj_hemorrhage": "A small burst blood vessel on the white of the eye. It looks alarming but is usually harmless and clears on its own.",
+  "dry_eye": "The eye surface is not staying moist enough, which causes irritation.",
+  "hordeolum_chalazion": "A blocked oil gland in the eyelid that causes a lump.",
+  "pterygium_pinguecula": "A growth on the white of the eye, often linked to sun and wind exposure.",
+  "lens_opacity_cataract": "The lens inside your eye may be getting cloudy (cataract). This is common and can be treated with surgery. An eye specialist needs to check it.",
+  "keratitis_ulcer": "An infection or sore on the clear front window of the eye. This needs urgent care by an eye specialist.",
+  "uveitis": "Inflammation inside the eye. This needs urgent care by an eye specialist.",
+  "angle_closure": "Pressure inside the eye has risen suddenly. This is an emergency and needs care by an eye specialist right away.",
+  "other_unclear": "Your clinician will explain the findings."
+}

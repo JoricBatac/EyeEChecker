@@ -1,0 +1,870 @@
+{
+  "_note": "Provisional list (PRD section 6). The Conditions document finalizes it; the clinical advisor reviews names, urgencies, Filipino text, and the visual_features / evidence explanations (DRAFT, not yet reviewed).",
+  "conditions": [
+    {
+      "id": "normal",
+      "name": {
+        "en": "No significant findings",
+        "fil": "Walang makabuluhang nakita"
+      },
+      "default_urgency": "routine",
+      "emergency": false,
+      "zero_shot_prompts": [
+        "a photo of a healthy human eye with a white sclera and clear cornea"
+      ],
+      "visual_features": {
+        "en": "White of the eye clear, cornea clear, no redness",
+        "fil": "Malinaw ang puti ng mata at cornea, walang pamumula"
+      },
+      "evidence": [
+        {
+          "direction": "against",
+          "text": {
+            "en": "Redness reported",
+            "fil": "May pamumula"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "redness"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Moderate or severe pain",
+            "fil": "Katamtaman o matinding sakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "in",
+            "value": [
+              "moderate",
+              "severe"
+            ]
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Change in vision",
+            "fil": "May pagbabago sa paningin"
+          },
+          "when": {
+            "fact": "exam.vision_change",
+            "op": "in",
+            "value": [
+              "mild_blur",
+              "gradual_reduction",
+              "marked_reduction",
+              "sudden_loss"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "conj_viral",
+      "name": {
+        "en": "Viral conjunctivitis",
+        "fil": "Viral na sore eyes (conjunctivitis)"
+      },
+      "default_urgency": "soon",
+      "emergency": false,
+      "zero_shot_prompts": [
+        "a photo of an eye with viral conjunctivitis, diffuse pink redness and watery discharge"
+      ],
+      "visual_features": {
+        "en": "Diffuse pink redness of the white of the eye with a watery eye",
+        "fil": "Kalat na pink na pamumula ng puti ng mata, matubig"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Watery discharge",
+            "fil": "Matubig na muta"
+          },
+          "when": {
+            "fact": "exam.discharge_type",
+            "op": "eq",
+            "value": "watery"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Tearing",
+            "fil": "Pagluluha"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "tearing"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Thick yellow/green discharge (more typical of bacterial)",
+            "fil": "Makapal na dilaw/berdeng muta (mas karaniwan sa bacterial)"
+          },
+          "when": {
+            "fact": "exam.discharge_type",
+            "op": "eq",
+            "value": "purulent"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Moderate or severe pain (unusual for conjunctivitis)",
+            "fil": "Katamtaman o matinding sakit (hindi karaniwan sa sore eyes)"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "in",
+            "value": [
+              "moderate",
+              "severe"
+            ]
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Reduced vision",
+            "fil": "Lumabong paningin"
+          },
+          "when": {
+            "fact": "exam.vision_change",
+            "op": "in",
+            "value": [
+              "marked_reduction",
+              "sudden_loss"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "conj_bacterial",
+      "name": {
+        "en": "Bacterial conjunctivitis",
+        "fil": "Bacterial na sore eyes (conjunctivitis)"
+      },
+      "default_urgency": "soon",
+      "emergency": false,
+      "zero_shot_prompts": [
+        "a photo of an eye with bacterial conjunctivitis and thick yellow purulent discharge"
+      ],
+      "visual_features": {
+        "en": "Red eye with thick yellow or green discharge",
+        "fil": "Mapulang mata na may makapal na dilaw o berdeng muta"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Thick yellow/green discharge",
+            "fil": "Makapal na dilaw/berdeng muta"
+          },
+          "when": {
+            "fact": "exam.discharge_type",
+            "op": "eq",
+            "value": "purulent"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Mucoid discharge",
+            "fil": "Malapot na muta"
+          },
+          "when": {
+            "fact": "exam.discharge_type",
+            "op": "eq",
+            "value": "mucoid"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Itching (more typical of allergy)",
+            "fil": "Pangangati (mas karaniwan sa allergy)"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "itching"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Moderate or severe pain (unusual for conjunctivitis)",
+            "fil": "Katamtaman o matinding sakit (hindi karaniwan sa sore eyes)"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "in",
+            "value": [
+              "moderate",
+              "severe"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "conj_allergic",
+      "name": {
+        "en": "Allergic conjunctivitis",
+        "fil": "Allergic na conjunctivitis"
+      },
+      "default_urgency": "routine",
+      "emergency": false,
+      "zero_shot_prompts": [
+        "a photo of an eye with allergic conjunctivitis, mild redness and swollen eyelids"
+      ],
+      "visual_features": {
+        "en": "Mild redness with puffy eyelids",
+        "fil": "Bahagyang pamumula at namamagang talukap"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Itching",
+            "fil": "Pangangati"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "itching"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Eyelid swelling",
+            "fil": "Pamamaga ng talukap"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "lid_swelling"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Thick yellow/green discharge",
+            "fil": "Makapal na dilaw/berdeng muta"
+          },
+          "when": {
+            "fact": "exam.discharge_type",
+            "op": "eq",
+            "value": "purulent"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Moderate or severe pain",
+            "fil": "Katamtaman o matinding sakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "in",
+            "value": [
+              "moderate",
+              "severe"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "subconj_hemorrhage",
+      "name": {
+        "en": "Subconjunctival hemorrhage",
+        "fil": "Pagdurugo sa puti ng mata (subconjunctival hemorrhage)"
+      },
+      "default_urgency": "routine",
+      "emergency": false,
+      "zero_shot_prompts": [
+        "a photo of an eye with a subconjunctival hemorrhage, a bright red patch of blood on the white of the eye"
+      ],
+      "visual_features": {
+        "en": "Bright red, flat patch of blood on the white of the eye",
+        "fil": "Matingkad na pulang patse ng dugo sa puti ng mata"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "No pain",
+            "fil": "Walang sakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "eq",
+            "value": "none"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Vision unchanged",
+            "fil": "Hindi nagbago ang paningin"
+          },
+          "when": {
+            "fact": "exam.vision_change",
+            "op": "eq",
+            "value": "none"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Moderate or severe pain",
+            "fil": "Katamtaman o matinding sakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "in",
+            "value": [
+              "moderate",
+              "severe"
+            ]
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Injury reported: check for other damage",
+            "fil": "May pinsala: suriin kung may iba pang sira"
+          },
+          "when": {
+            "fact": "exam.trauma_or_chemical",
+            "op": "in",
+            "value": [
+              "blunt",
+              "penetrating"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "dry_eye",
+      "name": {
+        "en": "Dry eye / ocular surface irritation",
+        "fil": "Tuyong mata / iritasyon"
+      },
+      "default_urgency": "routine",
+      "emergency": false,
+      "zero_shot_prompts": [
+        "a photo of a mildly irritated dry eye with slight redness"
+      ],
+      "visual_features": {
+        "en": "Mild redness without discharge",
+        "fil": "Bahagyang pamumula, walang muta"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Gritty / foreign body feeling",
+            "fil": "Parang may puwing"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "foreign_body_sensation"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Symptoms for weeks or longer",
+            "fil": "Ilang linggo o mas matagal na"
+          },
+          "when": {
+            "fact": "exam.duration",
+            "op": "in",
+            "value": [
+              "1_4w",
+              "gt_1m"
+            ]
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Thick discharge",
+            "fil": "Makapal na muta"
+          },
+          "when": {
+            "fact": "exam.discharge_type",
+            "op": "eq",
+            "value": "purulent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hordeolum_chalazion",
+      "name": {
+        "en": "Stye / chalazion",
+        "fil": "Kuliti / chalazion"
+      },
+      "default_urgency": "routine",
+      "emergency": false,
+      "zero_shot_prompts": [
+        "a photo of an eyelid with a stye or chalazion, a red lump on the eyelid margin"
+      ],
+      "visual_features": {
+        "en": "Red or skin-coloured lump on the eyelid",
+        "fil": "Pula o kakulay-balat na bukol sa talukap"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Eyelid swelling",
+            "fil": "Pamamaga ng talukap"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "lid_swelling"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Reduced vision",
+            "fil": "Lumabong paningin"
+          },
+          "when": {
+            "fact": "exam.vision_change",
+            "op": "in",
+            "value": [
+              "marked_reduction",
+              "sudden_loss"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pterygium_pinguecula",
+      "name": {
+        "en": "Pterygium / pinguecula",
+        "fil": "Pterygium / pinguecula (pugita)"
+      },
+      "default_urgency": "routine",
+      "emergency": false,
+      "zero_shot_prompts": [
+        "a photo of an eye with a pterygium, a triangular fleshy growth on the white of the eye extending onto the cornea"
+      ],
+      "visual_features": {
+        "en": "Fleshy, triangular growth on the white of the eye toward the cornea",
+        "fil": "Malamang tatsulok na tubo sa puti ng mata papunta sa cornea"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Present for more than a month",
+            "fil": "Mahigit isang buwan na"
+          },
+          "when": {
+            "fact": "exam.duration",
+            "op": "eq",
+            "value": "gt_1m"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Sudden onset (less than a day)",
+            "fil": "Biglaan (wala pang isang araw)"
+          },
+          "when": {
+            "fact": "exam.duration",
+            "op": "eq",
+            "value": "lt_1d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lens_opacity_cataract",
+      "name": {
+        "en": "Visible lens opacity (suspected cataract)",
+        "fil": "Paglabo ng lente (hinihinalang katarata)"
+      },
+      "default_urgency": "routine",
+      "emergency": false,
+      "always_refer": true,
+      "referral_reason": {
+        "en": "Needs evaluation for cataract surgery",
+        "fil": "Kailangang suriin para sa operasyon sa katarata"
+      },
+      "required_exam_fields_by_side": {
+        "right": [
+          "va_right"
+        ],
+        "left": [
+          "va_left"
+        ]
+      },
+      "pediatric_urgency": "urgent",
+      "zero_shot_prompts": [
+        "a photo of an eye with a cataract, a cloudy white or grey opaque lens behind the pupil"
+      ],
+      "visual_features": {
+        "en": "Cloudy white or grey lens behind the pupil",
+        "fil": "Malabong puti o abong lente sa likod ng balintataw"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Vision getting worse gradually over months",
+            "fil": "Unti-unting paglabo ng paningin sa loob ng mga buwan"
+          },
+          "when": {
+            "fact": "exam.vision_change",
+            "op": "eq",
+            "value": "gradual_reduction"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Dull or white red reflex",
+            "fil": "Mapurol o puting red reflex"
+          },
+          "when": {
+            "fact": "exam.red_reflex",
+            "op": "in",
+            "value": [
+              "dull",
+              "white"
+            ]
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Age 50 or older",
+            "fil": "Edad 50 pataas"
+          },
+          "when": {
+            "fact": "patient.age",
+            "op": "gte",
+            "value": 50
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Previous cataract surgery: an implanted lens can look cloudy in photos",
+            "fil": "Naoperahan na sa katarata: maaaring mukhang malabo ang lente sa larawan"
+          },
+          "when": {
+            "fact": "exam.prior_eye_surgery",
+            "op": "contains_any",
+            "value": [
+              "cataract_surgery_right",
+              "cataract_surgery_left"
+            ]
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Red, painful eye (cataract is usually painless and white)",
+            "fil": "Mapula at masakit na mata (karaniwang hindi masakit ang katarata)"
+          },
+          "when": {
+            "all": [
+              {
+                "fact": "exam.symptoms",
+                "op": "contains",
+                "value": "redness"
+              },
+              {
+                "fact": "exam.pain_severity",
+                "op": "in",
+                "value": [
+                  "moderate",
+                  "severe"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "keratitis_ulcer",
+      "name": {
+        "en": "Corneal ulcer / keratitis",
+        "fil": "Sugat sa cornea / keratitis"
+      },
+      "default_urgency": "urgent",
+      "emergency": true,
+      "zero_shot_prompts": [
+        "a photo of an eye with a corneal ulcer, a white spot on the cornea with surrounding redness"
+      ],
+      "visual_features": {
+        "en": "White or grey spot on the clear cornea with redness around it",
+        "fil": "Puti o abong batik sa malinaw na cornea na may pamumula"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Contact lens wearer",
+            "fil": "Gumagamit ng contact lens"
+          },
+          "when": {
+            "fact": "exam.contact_lens",
+            "op": "eq",
+            "value": true
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Visible white spot on the cornea",
+            "fil": "May puting batik sa cornea"
+          },
+          "when": {
+            "fact": "exam.corneal_opacity",
+            "op": "eq",
+            "value": true
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Pain",
+            "fil": "Pananakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "in",
+            "value": [
+              "mild",
+              "moderate",
+              "severe"
+            ]
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Light sensitivity",
+            "fil": "Masakit sa liwanag"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "photophobia"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "No pain",
+            "fil": "Walang sakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "eq",
+            "value": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "uveitis",
+      "name": {
+        "en": "Anterior uveitis / iritis",
+        "fil": "Anterior uveitis / iritis"
+      },
+      "default_urgency": "urgent",
+      "emergency": true,
+      "zero_shot_prompts": [
+        "a photo of an eye with anterior uveitis, redness concentrated in a ring around the cornea and a small pupil"
+      ],
+      "visual_features": {
+        "en": "Redness concentrated in a ring around the cornea; pupil may be small",
+        "fil": "Pamumula na nakapalibot sa cornea; maaaring maliit ang balintataw"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Light sensitivity",
+            "fil": "Masakit sa liwanag"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "photophobia"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Pain",
+            "fil": "Pananakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "in",
+            "value": [
+              "mild",
+              "moderate",
+              "severe"
+            ]
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Blurred vision",
+            "fil": "Malabong paningin"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "blurred_vision"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Thick yellow/green discharge (more typical of infection)",
+            "fil": "Makapal na dilaw/berdeng muta (mas karaniwan sa impeksyon)"
+          },
+          "when": {
+            "fact": "exam.discharge_type",
+            "op": "eq",
+            "value": "purulent"
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "Itching (more typical of allergy)",
+            "fil": "Pangangati (mas karaniwan sa allergy)"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "itching"
+          }
+        }
+      ]
+    },
+    {
+      "id": "angle_closure",
+      "name": {
+        "en": "Acute angle-closure glaucoma",
+        "fil": "Acute angle-closure glaucoma"
+      },
+      "default_urgency": "urgent",
+      "emergency": true,
+      "zero_shot_prompts": [
+        "a photo of an eye with acute angle closure glaucoma, a red eye with a hazy cornea and a mid-dilated pupil"
+      ],
+      "visual_features": {
+        "en": "Red eye with a hazy cornea and a mid-sized pupil that doesn't react",
+        "fil": "Mapulang mata, malabong cornea, at katamtamang laki ng balintataw"
+      },
+      "evidence": [
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Halos around lights",
+            "fil": "May bilog sa paligid ng ilaw"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "halos"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Headache",
+            "fil": "Sakit ng ulo"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "headache"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Nausea or vomiting",
+            "fil": "Pagduduwal o pagsusuka"
+          },
+          "when": {
+            "fact": "exam.symptoms",
+            "op": "contains",
+            "value": "nausea"
+          }
+        },
+        {
+          "direction": "supports",
+          "text": {
+            "en": "Moderate or severe pain",
+            "fil": "Katamtaman o matinding sakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "in",
+            "value": [
+              "moderate",
+              "severe"
+            ]
+          }
+        },
+        {
+          "direction": "against",
+          "text": {
+            "en": "No pain",
+            "fil": "Walang sakit"
+          },
+          "when": {
+            "fact": "exam.pain_severity",
+            "op": "eq",
+            "value": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "other_unclear",
+      "name": {
+        "en": "Other / not assessable from photo",
+        "fil": "Iba pa / hindi masuri mula sa larawan"
+      },
+      "default_urgency": null,
+      "emergency": false,
+      "classifiable": false
+    }
+  ]
+}

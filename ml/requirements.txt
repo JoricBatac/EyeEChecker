@@ -1,0 +1,15 @@
+# CPU wheels are fine for zero-shot, linear probes and placeholder runs.
+# For fine-tuning (stage C) use a GPU machine and the matching torch build.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.3
+torchvision>=0.18
+timm>=1.0
+transformers>=4.50
+sentencepiece>=0.2
+protobuf>=4.25
+onnx>=1.16
+onnxruntime>=1.18
+numpy>=1.26
+pillow>=10.3
+pyyaml>=6.0
+-e ../packages/core_py

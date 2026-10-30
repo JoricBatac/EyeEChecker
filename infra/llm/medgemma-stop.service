@@ -1,0 +1,7 @@
+[Unit]
+Description=Stop MedGemma (outside clinic hours)
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/scanassist/infra/llm
+ExecStart=/usr/bin/docker compose down

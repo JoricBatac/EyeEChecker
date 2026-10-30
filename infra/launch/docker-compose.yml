@@ -1,0 +1,70 @@
+# Zero-cost launch stack (PRD 12.7): one Oracle Cloud Always Free ARM VM in Singapore.
+# Photos live in a GCS bucket in asia-southeast1 (S3-compatible API), not on this VM.
+#
+#   cp .env.example .env && edit .env
+#   docker compose up -d --build
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      API_DOMAIN: ${API_DOMAIN}
+      WEB_DOMAIN: ${WEB_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    depends_on: [backend]
+
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: scanassist
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: scanassist
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scanassist"]
+      interval: 10s
+      retries: 10
+
+  backend:
+    build:
+      context: ../..
+      dockerfile: backend/Dockerfile
+      platforms: ["linux/arm64"]
+      args:
+        INSTALL_ML: "true"   # MedSigLIP zero-shot runs in-process on CPU
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      APP_ENV: production
+      DATABASE_URL: postgresql+psycopg://scanassist:${POSTGRES_PASSWORD}@postgres:5432/scanassist
+      STORAGE_BACKEND: s3
+      STORAGE_ENDPOINT_URL: https://storage.googleapis.com
+      STORAGE_REGION: asia-southeast1
+      PACKS_DIR: /srv/packs
+      MODEL_DIR: /srv/models
+      CORS_ORIGINS: '["https://${WEB_DOMAIN}"]'
+    volumes:
+      - ../../packs:/srv/packs:ro
+      - ../../models:/srv/models:ro
+      - hfcache:/home/app/.cache/huggingface
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  backup:
+    image: postgres:16
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+    volumes: [./backup.sh:/backup.sh:ro]
+    entrypoint: ["/bin/bash", "-c", "apt-get update -qq && apt-get install -y -qq curl gnupg python3 >/dev/null && while true; do /backup.sh; sleep 86400; done"]
+    depends_on: [postgres]
+
+volumes:
+  pgdata:
+  caddy_data:
+  hfcache:

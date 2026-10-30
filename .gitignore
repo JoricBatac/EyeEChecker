@@ -1,0 +1,42 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+*.db
+.local_storage/
+
+# ML artifacts and data (never committed; training data lives in the separate workstream)
+ml/runs/
+ml/data/
+models/
+*.onnx
+*.safetensors
+*.pt
+
+# Evaluation outputs may contain derived data
+eval/**/out/
+
+# Node / Expo / Next
+node_modules/
+.expo/
+.next/
+dist/
+web-build/
+*.tsbuildinfo
+apps/mobile/android/
+apps/mobile/ios/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
