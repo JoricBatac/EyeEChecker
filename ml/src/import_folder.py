@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import fnmatch
 import hashlib
 from pathlib import Path
 
@@ -30,6 +31,10 @@ def main() -> None:
     ap.add_argument("--source-dataset", required=True)
     ap.add_argument("--consent-ref", required=True, help="where consent/licensing for this dataset is recorded")
     ap.add_argument("--label-source", default="folder_name")
+    ap.add_argument(
+        "--exclude", action="append", default=[], metavar="GLOB",
+        help="skip matching file names, e.g. 'aug_*' for pre-augmented copies that would leak across splits",
+    )  # fmt: skip
     args = ap.parse_args()
 
     root = check_image_root(Path(args.source))
@@ -41,10 +46,13 @@ def main() -> None:
     if unmapped:
         ap.error(f"folders without a --map entry: {unmapped}")
 
-    rows, seen = [], {}
+    rows, seen, excluded = [], {}, 0
     for folder, label in mapping.items():
         for f in sorted((root / folder).iterdir()):
             if f.suffix.lower() not in IMAGE_SUFFIXES:
+                continue
+            if any(fnmatch.fnmatch(f.name, g) for g in args.exclude):
+                excluded += 1
                 continue
             digest = hashlib.sha256(f.read_bytes()).hexdigest()
             if digest in seen:
@@ -67,7 +75,7 @@ def main() -> None:
         w.writeheader()
         w.writerows(rows)
     counts = {label: sum(r["label"] == label for r in rows) for label in mapping.values()}
-    print(f"wrote {len(rows)} rows to {out}: {counts}")
+    print(f"wrote {len(rows)} rows to {out}: {counts} ({excluded} excluded by --exclude)")
 
 
 if __name__ == "__main__":
